@@ -15,7 +15,7 @@ class App extends Component
     renderPosts()
     {
 
-        //return this.props.posts.map( (post) => <li key={post.id}>{post.title}</li>)
+        return this.props.posts.map( (post) => <li key={post.id}>{post.title}</li>)
     }
 
   render() {
