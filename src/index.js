@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter, Route} from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -12,6 +13,7 @@ import promise from 'redux-promise';
 import { reducers } from "./reducers/reducers_index";
 
 import './index.css';
+import 'bulma'
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
