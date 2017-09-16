@@ -20,53 +20,52 @@ class AllPosts extends Component
     renderPosts()
     {
         // Check for an empty object before calling the map function
-        if (Object.keys(this.props.posts).length === 0)
-        {
-            console.log('empty array')
-        }
-        else
-        {
-            return this.props.posts.map(
-                (post) => <Post key={post.id} title={post.title} body={post.body} author={post.author} category={post.category}/>)
-        }
-        // return this.props.posts.map(
+        // if (Object.keys(this.props.posts).length === 0)
+        // {
+        //     console.log('empty array')
+        // }
+        // else
+        // {
+        //     return this.props.posts.map(
         //         (post) => <Post key={post.id} title={post.title} body={post.body} author={post.author} category={post.category}/>)
+        // }
+        const { posts } = this.props.posts;
+        return posts.map(
+                (post) => <Post key={post.id} title={post.title} body={post.body} author={post.author} category={post.category}/>)
 
 
     }
 
-
-
     renderCategories()
     {
-        //Check for an empty object before calling the map function
-        if (Object.keys(this.props.categories).length === 0) {
-            console.log('empty array')
-        }
-        else
-        {
-            return this.props.categories.map(
-                (category) => <li key={category.path}>{category.name}</li>)
-        }
+        // return this.props.categories.map(
+        //     (category) => <li key={category.path}>{category.name}</li>)
+
+        //console.log(this.props.categories[0])
+        return this.props.categories.map( (category) => {
+            return <li key={category.name}>{category.name}</li>
+        })
     }
 
 
 
     render() {
 
-        // if (Object.keys(this.props.posts).length === 0)
-        // {
-        //     console.log("in loading");
-        //     return <div>Loading...</div>
-        // }
+        const { posts } = this.props.posts;
+        if (!posts)
+        {
+            console.log("in loading");
+            return <div>Loading...</div>
+        }
+
         return (
             <div  className="block">
                 <div className="is-right">
-                    <Link className="button is-info" to="/posts/new">
+                    <Link className="button is-info" to="/posts/new" onClick={() => { console.log("clicked the link")}}>
                         Add a Post
                     </Link>
                 </div>
-                <h1 className="title">Home</h1>
+                <h1 className="title">Post Index</h1>
                 <ul>
                     {this.renderCategories()}
                 </ul>

@@ -1,6 +1,6 @@
 import {FETCH_CATEGORIES} from "../actions/actions_index";
 
-export default function(state = {}, action)
+export default function(state = [], action)
 {
     switch (action.type)
     {

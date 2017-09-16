@@ -17,7 +17,7 @@ class PostDetails extends Component
 
         // Checks if post is undefined.  If it is undefined then the app will crash.
         // This is also a check to make sure the data has come from the api before reading the actual component
-        if (!post)
+        if (!this.props.post)
         {
             return <div>Loading...</div>
         }
@@ -34,7 +34,7 @@ class PostDetails extends Component
 
 function mapStateToProps({ postState }, ownProps)
 {
-    return { post: postState};
+    return { post: postState.currentPost};
 }
 
 export default connect(mapStateToProps, {fetchPost})(PostDetails);

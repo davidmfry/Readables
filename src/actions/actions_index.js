@@ -10,7 +10,7 @@ export const ADD_VOTE = "add_vote";
 export const SUB_VOTE = "sub_vote";
 
 
-
+// Might need to changes this to localhost:#PORT
 const BASE_URL = 'http://192.168.1.14:5001';
 const header = { headers: {'Authorization': 'anything'} };
 
@@ -27,6 +27,7 @@ export function fetchPosts()
 export function fetchPost(id)
 {
     const request = axios.get(`${BASE_URL}/posts/${id}`, header);
+
     return {
         type: FETCH_POST,
         payload: request
