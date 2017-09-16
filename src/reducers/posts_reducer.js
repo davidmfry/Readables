@@ -6,7 +6,12 @@ export default function(state = {}, action)
     {
         case FETCH_POSTS:
             return action.payload.data;
+        case FETCH_POST:
+            return action.payload.data;
         default:
             return state;
     }
 }
+
+
+// {...state, [action.payload.data.id]: action.payload.data };
