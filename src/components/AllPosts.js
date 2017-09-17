@@ -31,7 +31,12 @@ class AllPosts extends Component
         // }
         const { posts } = this.props.posts;
         return posts.map(
-                (post) => <Post key={post.id} title={post.title} body={post.body} author={post.author} category={post.category}/>)
+                (post) => <Post key={post.id}
+                                id={post.id}
+                                title={post.title}
+                                body={post.body}
+                                author={post.author}
+                                category={post.category}/>)
 
 
     }

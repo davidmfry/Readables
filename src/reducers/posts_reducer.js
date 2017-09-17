@@ -5,7 +5,8 @@ export default function(state = {}, action)
     switch (action.type)
     {
         case FETCH_POSTS:
-            return {...state, posts:action.payload.data};
+            const data = action.payload.data.filter((post) => post.deleted === false);
+            return {...state, posts:data};
         case FETCH_POST:
             return {...state, currentPost: action.payload.data};
         default:

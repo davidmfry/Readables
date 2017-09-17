@@ -1,11 +1,12 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 function Post(props)
 {
+    const id = `/posts/${props.id}`;
     return (
         <div>
             <div className="box">
-                <h1 className="title">{props.title}</h1>
+                <h1 className="title"><Link to={id}>{props.title}</Link></h1>
                 <p>{props.body}</p>
                 <nav className="level">
                     <div className="level-left">

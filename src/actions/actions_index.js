@@ -16,7 +16,8 @@ const header = { headers: {'Authorization': 'anything'} };
 
 export function fetchPosts()
 {
-    const request = axios.get(`${BASE_URL}/posts`, header);
+    let data = null;
+    const request = axios.get(`${BASE_URL}/posts`, header)
 
     return {
         type: FETCH_POSTS,
@@ -54,5 +55,14 @@ export function createNewPost(values, callback)
     return {
         type: CREATE_NEW_POST,
         payload: request
+    }
+}
+
+export function deletePost(id, callback)
+{
+    const request = axios.delete(`${BASE_URL}/posts/${id}`, header).then(() => callback());
+    return{
+        type: DELETE_POST,
+        payload: id
     }
 }
