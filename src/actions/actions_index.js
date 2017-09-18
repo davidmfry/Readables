@@ -6,6 +6,7 @@ export const FETCH_POST = 'fetch_post';
 export const FETCH_CATEGORIES = 'fetch_categories';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const CREATE_NEW_POST = 'create_new_post';
+export const CREATE_NEW_COMMENT = 'create_new_comment';
 export const DELETE_POST = "delete_post";
 export const ADD_VOTE = "add_vote";
 export const SUB_VOTE = "sub_vote";
@@ -67,6 +68,22 @@ export function createNewPost(values, callback)
     return {
         type: CREATE_NEW_POST,
         payload: request
+    }
+}
+
+export function createComment(id, values, callback)
+{
+    values.id = utils.createRandomId(10);
+    values.parentId = id;
+    values.timestamp = Date.now();
+
+    const request = axios.post(`${BASE_URL}/comments`, values, header).then( () => callback());
+    console.log(request.data);
+
+    return {
+        type: CREATE_NEW_COMMENT,
+        payload: request
+
     }
 }
 

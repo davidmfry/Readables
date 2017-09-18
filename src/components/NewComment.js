@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { createNewPost} from "../actions/actions_index";
+import { createComment } from "../actions/actions_index";
 
 
 class NewComment extends Component
@@ -51,13 +51,17 @@ class NewComment extends Component
         )
     }
 
-    submit = (values) => {
-        // values is all the data from the form
 
-        this.props.createNewPost(values, () => {
-            // Sends the user back to the home page after the new post has been add to the DB
-            this.props.history.push('/');
+    submit = (values) => {
+        const { id } = this.props;
+        // values is all the data from the form
+        this.props.createComment(id, values, () => {
+            // Closes the new comment UI when the comment has been saved
+            this.props.hideComment();
+
         });
+
+
     };
 
     render() {
@@ -66,7 +70,7 @@ class NewComment extends Component
         return (
             <div className="block">
                 <div className="box">
-                    <h1 className="title">New Post</h1>
+                    <h1 className="title">New Comment</h1>
                     <form onSubmit={handleSubmit(this.submit.bind(this))}>
                         <Field
                             label="Title"
@@ -79,17 +83,13 @@ class NewComment extends Component
                             component={this.renderTextField}
                         />
 
-                        <Field
-                            name="category"
-                            component={this.renderCategoryField}
-                        />
 
                         <Field
                             name="body"
                             component={this.renderBodyField}
                         />
 
-                        <button type="submit" className="button is-success">Save Post</button>
+                        <button type="submit" className="button is-success">Save Comment</button>
                         <Link to="/" className="button is-danger">Cancel</Link>
                     </form>
                 </div>
@@ -122,5 +122,5 @@ export default reduxForm({
     validate,
     form: 'NewComment'
 })(
-    connect(null, { createNewPost })(NewComment)
+    connect(null, { createComment })(NewComment)
 )
