@@ -1,13 +1,15 @@
 import axios from 'axios';
 import * as utils from '../utilis'
 
-export const FETCH_POSTS = "fetch_posts";
-export const FETCH_POST = "fetch_post";
+export const FETCH_POSTS = 'fetch_posts';
+export const FETCH_POST = 'fetch_post';
 export const FETCH_CATEGORIES = 'fetch_categories';
+export const FETCH_COMMENTS = 'fetch_comments';
 export const CREATE_NEW_POST = 'create_new_post';
 export const DELETE_POST = "delete_post";
 export const ADD_VOTE = "add_vote";
 export const SUB_VOTE = "sub_vote";
+
 
 
 // Might need to changes this to localhost:#PORT
@@ -17,7 +19,7 @@ const header = { headers: {'Authorization': 'anything'} };
 export function fetchPosts()
 {
     let data = null;
-    const request = axios.get(`${BASE_URL}/posts`, header)
+    const request = axios.get(`${BASE_URL}/posts`, header);
 
     return {
         type: FETCH_POSTS,
@@ -42,6 +44,16 @@ export function fetchCategories()
 
     return {
         type: FETCH_CATEGORIES,
+        payload: request
+    }
+}
+
+export function fetchComments(id)
+{
+    const request = axios.get(`${BASE_URL}/posts/${id}/comments`, header);
+
+    return {
+        type: FETCH_COMMENTS,
         payload: request
     }
 }

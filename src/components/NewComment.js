@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { createNewPost} from "../actions/actions_index";
 
 
-class NewPost extends Component
+class NewComment extends Component
 {
     renderTextField(field)
     {
@@ -27,25 +27,6 @@ class NewPost extends Component
                     {touched ? error : ' '}
                 </div>
 
-            </div>
-        )
-    }
-
-
-    renderCategoryField(field)
-    {
-        return (
-            <div className="field">
-                <label className="label">Category</label>
-                <p className="control">
-                    <span className="select">
-                        <select {...field.input}>
-                            <option>React</option>
-                            <option>Redux</option>
-                            <option>Udacity</option>
-                        </select>
-                    </span>
-                </p>
             </div>
         )
     }
@@ -141,5 +122,5 @@ export default reduxForm({
     validate,
     form: 'NewComment'
 })(
-    connect(null, { createNewPost })(NewPost)
+    connect(null, { createNewPost })(NewComment)
 )

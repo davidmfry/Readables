@@ -1,4 +1,4 @@
-import {FETCH_POST, FETCH_POSTS, FETCH_CATEGORIES ,DELETE_POST, ADD_VOTE, SUB_VOTE} from "../actions/actions_index";
+import {FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, FETCH_CATEGORIES ,DELETE_POST, ADD_VOTE, SUB_VOTE} from "../actions/actions_index";
 
 export default function(state = {}, action)
 {
@@ -9,6 +9,8 @@ export default function(state = {}, action)
             return {...state, posts:data};
         case FETCH_POST:
             return {...state, currentPost: action.payload.data};
+        case FETCH_COMMENTS:
+            return {...state, comments: action.payload.data};
         default:
             return state;
     }

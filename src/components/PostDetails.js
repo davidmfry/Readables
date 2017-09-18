@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import {fetchPost, deletePost} from "../actions/actions_index";
+import {fetchPost, deletePost, fetchComments} from "../actions/actions_index";
+
+import Comment from './Comment';
 
 class PostDetails extends Component
 {
@@ -10,6 +12,7 @@ class PostDetails extends Component
     {
         const { id } = this.props.match.params;
         this.props.fetchPost(id);
+        this.props.fetchComments(id);
     }
 
     onDeleteHandler()
@@ -21,6 +24,12 @@ class PostDetails extends Component
         });
     }
 
+    renderComments()
+    {
+        return this.props.comments.map( (comment) => {
+            return <Comment key={comment.id} author={comment.author} body={comment.body} />
+        });
+    }
     render() {
         const { post } = this.props;
 
@@ -30,39 +39,56 @@ class PostDetails extends Component
         {
             return <div>Loading...</div>
         }
-        return (
-            <div>
-                <div className="level">
-                    <div className="level-left">
-                        <div className="level-item">
-                            <Link to="/" className="button is-primary">Back to post index</Link>
+        else if (!this.props.comments)
+        {
+            return <div>Loading...</div>
+        }
+        else
+        {
+            return (
+                <div>
+                    <div className="level">
+                        <div className="level-left">
+                            <div className="level-item">
+                                <Link to="/" className="button is-primary">Back to post index</Link>
+                            </div>
+                        </div>
+
+                        <div className="level-right">
+                            <div className="level-item">
+                                <button
+                                    className="button is-danger"
+                                    onClick={this.onDeleteHandler.bind(this)}
+                                >
+                                    Delete Post
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="level-right">
-                        <div className="level-item">
-                            <button
-                                className="button is-danger"
-                                onClick={this.onDeleteHandler.bind(this)}
-                            >
-                                Delete Post
-                            </button>
-                        </div>
+                    <div>
+                        <h1 className="title">{post.title}</h1>
+                        <h3 className="title">{post.author}</h3>
+                        <p>{post.body}</p>
+                    </div>
+
+                    <div>
+                        <h4 className="title is-4">Comments</h4>
+                        {this.renderComments()}
                     </div>
                 </div>
+            );
+        }
 
-
-                <h1 className="title">{post.title}</h1>
-                <h3 className="subtitle">{post.author}</h3>
-                <p>{post.body}</p>
-            </div>
-        );
     }
 }
 
 function mapStateToProps({ postState }, ownProps)
 {
-    return { post: postState.currentPost};
+    return {
+        post: postState.currentPost,
+        comments: postState.comments
+    };
 }
 
-export default connect(mapStateToProps, {fetchPost, deletePost})(PostDetails);
+export default connect(mapStateToProps, {fetchPost, fetchComments,deletePost})(PostDetails);
