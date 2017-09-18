@@ -7,3 +7,8 @@ body {
 form a {
     margin-left: 5px
 }
+
+.comment-btn {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}

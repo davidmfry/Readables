@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { createNewPost} from "../actions/actions_index";
+import { createComment } from "../actions/actions_index";
 
 
-class NewPost extends Component
+class NewComment extends Component
 {
     renderTextField(field)
     {
@@ -27,25 +27,6 @@ class NewPost extends Component
                     {touched ? error : ' '}
                 </div>
 
-            </div>
-        )
-    }
-
-
-    renderCategoryField(field)
-    {
-        return (
-            <div className="field">
-                <label className="label">Category</label>
-                <p className="control">
-                    <span className="select">
-                        <select {...field.input}>
-                            <option>React</option>
-                            <option>Redux</option>
-                            <option>Udacity</option>
-                        </select>
-                    </span>
-                </p>
             </div>
         )
     }
@@ -70,13 +51,17 @@ class NewPost extends Component
         )
     }
 
-    submit = (values) => {
-        // values is all the data from the form
 
-        this.props.createNewPost(values, () => {
-            // Sends the user back to the home page after the new post has been add to the DB
-            this.props.history.push('/');
+    submit = (values) => {
+        const { id } = this.props;
+        // values is all the data from the form
+        this.props.createComment(id, values, () => {
+            // Closes the new comment UI when the comment has been saved
+            this.props.hideComment();
+
         });
+
+
     };
 
     render() {
@@ -85,7 +70,7 @@ class NewPost extends Component
         return (
             <div className="block">
                 <div className="box">
-                    <h1 className="title">New Post</h1>
+                    <h1 className="title">New Comment</h1>
                     <form onSubmit={handleSubmit(this.submit.bind(this))}>
                         <Field
                             label="Title"
@@ -98,17 +83,13 @@ class NewPost extends Component
                             component={this.renderTextField}
                         />
 
-                        <Field
-                            name="category"
-                            component={this.renderCategoryField}
-                        />
 
                         <Field
                             name="body"
                             component={this.renderBodyField}
                         />
 
-                        <button type="submit" className="button is-success">Save Post</button>
+                        <button type="submit" className="button is-success">Save Comment</button>
                         <Link to="/" className="button is-danger">Cancel</Link>
                     </form>
                 </div>
@@ -141,5 +122,5 @@ export default reduxForm({
     validate,
     form: 'NewComment'
 })(
-    connect(null, { createNewPost })(NewPost)
+    connect(null, { createComment })(NewComment)
 )
