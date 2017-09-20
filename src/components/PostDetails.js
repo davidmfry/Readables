@@ -83,6 +83,9 @@ class PostDetails extends Component
 
                         <div className="level-right">
                             <div className="level-item">
+                                <Link to={`/posts/edit/${id}`} className="button is-warning">Edit Post</Link>
+                            </div>
+                            <div className="level-item">
                                 <button
                                     className="button is-danger"
                                     onClick={this.onDeleteHandler.bind(this)}
@@ -125,4 +128,4 @@ function mapStateToProps({ postState }, ownProps)
     };
 }
 
-export default connect(mapStateToProps, {fetchPost, fetchComments,deletePost})(PostDetails);
+export default connect(mapStateToProps, {fetchPost, fetchComments, deletePost})(PostDetails);

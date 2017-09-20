@@ -1,4 +1,4 @@
-import {FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, FETCH_CATEGORIES ,DELETE_POST, ADD_VOTE, SUB_VOTE} from "../actions/actions_index";
+import {FETCH_POST, FETCH_POSTS, FETCH_COMMENTS, ADD_VOTE, SUB_VOTE} from "../actions/actions_index";
 
 export default function(state = {}, action)
 {

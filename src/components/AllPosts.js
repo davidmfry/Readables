@@ -59,7 +59,6 @@ class AllPosts extends Component
         const { posts } = this.props.posts;
         if (!posts)
         {
-            console.log("in loading");
             return <div>Loading...</div>
         }
 

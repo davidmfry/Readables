@@ -14,12 +14,13 @@ import { reducers } from "./reducers/reducers_index";
 //Component
 import NewPost from './components/NewPost'
 import PostDetails from './components/PostDetails'
+import AllPosts from "./components/AllPosts";
+import EditPost from './components/EditPost';
 
 import 'bulma/css/bulma.css'
 import './index.css';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import AllPosts from "./components/AllPosts";
+
 
 
 
@@ -36,6 +37,7 @@ ReactDOM.render(
             <div className="container">
                 <Switch>
                     <Route path="/posts/new" component={NewPost}/>
+                    <Route path="/posts/edit/:id" component={EditPost}/>
                     <Route path="/posts/:id" component={PostDetails}/>
                     <Route path="/" component={AllPosts}/>
                 </Switch>
