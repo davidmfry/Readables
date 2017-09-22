@@ -36,7 +36,10 @@ class AllPosts extends Component
                                 title={post.title}
                                 body={post.body}
                                 author={post.author}
-                                category={post.category}/>)
+                                category={post.category}
+                                voteScore={post.voteScore}
+                                time={post.timestamp}
+                />)
 
 
     }

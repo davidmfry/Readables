@@ -9,8 +9,8 @@ export const CREATE_NEW_POST = 'create_new_post';
 export const EDIT_POST = 'edit_post';
 export const CREATE_NEW_COMMENT = 'create_new_comment';
 export const DELETE_POST = "delete_post";
-export const ADD_VOTE = "add_vote";
-export const SUB_VOTE = "sub_vote";
+export const UP_VOTE = "up_vote";
+export const DOWN_VOTE = "down_vote";
 
 
 
@@ -102,6 +102,26 @@ export function deletePost(id, callback)
     const request = axios.delete(`${BASE_URL}/posts/${id}`, header).then(() => callback());
     return{
         type: DELETE_POST,
+        payload: id
+    }
+}
+
+export function vote(id, currentVoteScore, voteCondition)
+{
+    let value = {};
+    switch (voteCondition)
+    {
+        case "upVote":
+            value = {voteScore: currentVoteScore + 1};
+            break;
+        case "downVote":
+            value = {voteScore: currentVoteScore - 1};
+            break;
+    }
+    const request = axios.put(`${BASE_URL}/posts/${id}`,value, header);
+
+    return{
+        type: UP_VOTE,
         payload: id
     }
 }
