@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { vote, fetchPosts } from "../actions/actions_index";
+import { postVote, fetchPosts } from "../actions/actions_index";
 
 import moment from 'moment';
 
@@ -10,13 +10,13 @@ class Post extends Component
 {
     onClickHandlerUpVote()
     {
-        this.props.upVote(this.props.id, this.props.voteScore, "upVote");
+        this.props.upVote(this.props.id, this.props.voteScore, "upVote", "post");
         this.props.fetchPosts();
     }
 
     onClickHandlerDownVote()
     {
-        this.props.upVote(this.props.id, this.props.voteScore, "downVote");
+        this.props.upVote(this.props.id, this.props.voteScore, "downVote", "post");
         this.props.fetchPosts();
     }
 
@@ -38,7 +38,7 @@ class Post extends Component
 
                                 <h1 className="title"><Link to={id}>{this.props.title}</Link></h1>
                                 <p>
-                                    <strong>{this.props.author}</strong> <small>{time.format('llll')}</small>
+                                    <strong>{this.props.author}</strong> <small>{time.format('llll')}</small> Category: {this.props.category}
                                     <br/>
                                     {this.props.body}
 
@@ -81,6 +81,6 @@ class Post extends Component
     }
 }
 
-export default connect(null, {upVote: vote, fetchPosts})(Post);
+export default connect(null, {upVote: postVote, fetchPosts})(Post);
 
 

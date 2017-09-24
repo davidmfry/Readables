@@ -8,7 +8,7 @@ import { fetchPosts, fetchCategories, fetchPostsInCategory } from "../actions/ac
 import Post from './Post'
 
 
-class AllPosts extends Component
+class CategoryPost extends Component
 {
     componentDidMount()
     {
@@ -21,15 +21,15 @@ class AllPosts extends Component
     {
         const { posts } = this.props.posts;
         return posts.map(
-                (post) => <Post key={post.id}
-                                id={post.id}
-                                title={post.title}
-                                body={post.body}
-                                author={post.author}
-                                category={post.category}
-                                voteScore={post.voteScore}
-                                time={post.timestamp}
-                />)
+            (post) => <Post key={post.id}
+                            id={post.id}
+                            title={post.title}
+                            body={post.body}
+                            author={post.author}
+                            category={post.category}
+                            voteScore={post.voteScore}
+                            time={post.timestamp}
+            />)
 
 
     }
@@ -69,7 +69,7 @@ class AllPosts extends Component
                 <h1 className="title">Post Index</h1>
                 <div className="columns">
                     <div className="column">
-                        <button onClick={ () => {this.props.fetchPosts()}} className="button is-primary">All Posts</button>
+                        <Link to='/' className="button is-primary">All Posts</Link>
                         {this.renderCategories()}
                         <Link className="button is-info smallSpaceLeft" to="/posts/new" onClick={() => { console.log("clicked" +
                             " the link")}}>
@@ -98,4 +98,4 @@ function mapStateToProps(state)
 }
 
 
-export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory})(AllPosts)
+export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory})(CategoryPost)

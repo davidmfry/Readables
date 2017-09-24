@@ -51,8 +51,9 @@ class PostDetails extends Component
     }
     renderComments()
     {
+        const { id } = this.props.match.params;
         return this.props.comments.map( (comment) => {
-            return <Comment key={comment.id} author={comment.author} body={comment.body} />
+            return <Comment key={comment.id} id={comment.id} postId={id} author={comment.author} body={comment.body} time={comment.timestamp} voteScore={comment.voteScore} />
         });
     }
     render() {

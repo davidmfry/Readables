@@ -3,14 +3,15 @@ import * as utils from '../utilis'
 
 export const FETCH_POSTS = 'fetch_posts';
 export const FETCH_POST = 'fetch_post';
+export const FETCH_POSTS_IN_CATEGORY = 'fetch_posts_in_category';
 export const FETCH_CATEGORIES = 'fetch_categories';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const CREATE_NEW_POST = 'create_new_post';
 export const EDIT_POST = 'edit_post';
 export const CREATE_NEW_COMMENT = 'create_new_comment';
 export const DELETE_POST = "delete_post";
-export const UP_VOTE = "up_vote";
-export const DOWN_VOTE = "down_vote";
+export const POST_VOTE = "post_vote";
+export const COMMENT_VOTE = "down_vote";
 
 
 
@@ -38,6 +39,17 @@ export function fetchPost(id)
     }
 }
 
+export function fetchPostsInCategory(category)
+{
+    const request = axios.get(`${BASE_URL}/${category}/posts`, header);
+    console.log("in fetchPostsInCategory");
+    return {
+        type: FETCH_POSTS_IN_CATEGORY,
+        payload: request,
+    }
+
+}
+
 export function fetchCategories()
 {
     const request = axios.get(`${BASE_URL}/categories`, header);
@@ -59,8 +71,10 @@ export function fetchComments(id)
 
 export function createNewPost(values, callback)
 {
+    let categoryLower = values.category.toLowerCase();
     values.id = utils.createRandomId(10);
     values.timestamp = Date.now();
+    values.category = categoryLower;
     const request = axios.post(`${BASE_URL}/posts`, values, header).then( () => callback());
 
     return {
@@ -106,7 +120,18 @@ export function deletePost(id, callback)
     }
 }
 
-export function vote(id, currentVoteScore, voteCondition)
+function newVoteScore(currentVoteScore, voteCondition)
+{
+    switch (voteCondition)
+    {
+        case "upVote":
+            return {voteScore: currentVoteScore + 1};
+        case "downVote":
+            return {voteScore: currentVoteScore - 1};
+    }
+}
+
+export function postVote(id, currentVoteScore, voteCondition)
 {
     let value = {};
     switch (voteCondition)
@@ -118,10 +143,32 @@ export function vote(id, currentVoteScore, voteCondition)
             value = {voteScore: currentVoteScore - 1};
             break;
     }
+
     const request = axios.put(`${BASE_URL}/posts/${id}`,value, header);
 
     return{
-        type: UP_VOTE,
+        type: POST_VOTE,
+        payload: id
+    }
+}
+
+export function commentVote(id, currentVoteScore, voteCondition)
+{
+    let value = {};
+    switch (voteCondition)
+    {
+        case "upVote":
+            value = {voteScore: currentVoteScore + 1};
+            break;
+        case "downVote":
+            value = {voteScore: currentVoteScore - 1};
+            break;
+    }
+
+    const request = axios.put(`${BASE_URL}/comments/${id}`,value, header);
+
+    return{
+        type: COMMENT_VOTE,
         payload: id
     }
 }
