@@ -8,6 +8,7 @@ export const FETCH_CATEGORIES = 'fetch_categories';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const CREATE_NEW_POST = 'create_new_post';
 export const EDIT_POST = 'edit_post';
+export const EDIT_COMMENT = 'edit_comment';
 export const CREATE_NEW_COMMENT = 'create_new_comment';
 export const DELETE_POST = "delete_post";
 export const POST_VOTE = "post_vote";
@@ -95,6 +96,17 @@ export function editPost(values, id , callback)
 
 }
 
+export function editComment(values, id, callback)
+{
+    values.timestamp = Date.now();
+    const request = axios.put(`${BASE_URL}/comments/${id}`, values, header).then( () => callback());
+
+    return {
+        type: EDIT_COMMENT,
+        payload: request
+    }
+}
+
 export function createComment(id, values, callback)
 {
     values.id = utils.createRandomId(10);
@@ -114,6 +126,15 @@ export function createComment(id, values, callback)
 export function deletePost(id, callback)
 {
     const request = axios.delete(`${BASE_URL}/posts/${id}`, header).then(() => callback());
+    return{
+        type: DELETE_POST,
+        payload: id
+    }
+}
+
+export function deleteComment(id, callback)
+{
+    const request = axios.delete(`${BASE_URL}/comments/${id}`, header).then(() => callback());
     return{
         type: DELETE_POST,
         payload: id

@@ -41,13 +41,8 @@ class AllPosts extends Component
 
     renderCategories()
     {
-        // return this.props.categories.map(
-        //     (category) => <li key={category.path}>{category.name}</li>)
-
-        //console.log(this.props.categories[0])
         return this.props.categories.map( (category) => {
             return <button  key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</button>
-            // return <li key={category.name}>{category.name}</li>
         })
     }
 

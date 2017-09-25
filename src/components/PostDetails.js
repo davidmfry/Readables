@@ -14,6 +14,7 @@ class PostDetails extends Component
         super(props);
         this.state = {
             showNewComment: false,
+            showEditComment: false,
             parentId: this.props.match.params
         };
         // makes sure this stays in context of PostDetails when hideComment is called from another component
@@ -47,6 +48,15 @@ class PostDetails extends Component
 
         // This is called from <NewComment/>
         this.setState({showNewComment: false});
+        this.props.fetchComments(id);
+    }
+
+    hideEditComment()
+    {
+        const { id } = this.props.match.params;
+
+        // This is called from <NewComment/>
+        this.setState({showEditComment: false});
         this.props.fetchComments(id);
     }
     renderComments()
@@ -109,6 +119,7 @@ class PostDetails extends Component
                     </div>
 
                     { this.state.showNewComment ? <NewComment id={id} hideComment={this.hideComment}/> : null}
+
 
                     <div>
                         <h4 className="title is-4">Comments</h4>

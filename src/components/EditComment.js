@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { createComment } from "../actions/actions_index";
+import { editComment } from "../actions/actions_index";
 
 
-class NewComment extends Component
+class EditComment extends Component
 {
     renderTextField(field)
     {
@@ -22,6 +22,7 @@ class NewComment extends Component
                     className={inputError}
                     type="text"
                     {...field.input}
+                    placeholder={field.currentValue}
                 />
                 <div className={showErrorText}>
                     {touched ? error : ' '}
@@ -41,7 +42,7 @@ class NewComment extends Component
             <div className="field">
                 <label className="label">Body</label>
                 <p className="control">
-                    <textarea {...field.input} className={inputError} placeholder="Type your post in here..."></textarea>
+                    <textarea {...field.input} className={inputError} placeholder={field.currentValue}></textarea>
                 </p>
                 <div className={showErrorText}>
                     {touched ? error : ' '}
@@ -55,11 +56,13 @@ class NewComment extends Component
     submit = (values) => {
         const { id } = this.props;
         // values is all the data from the form
-        this.props.createComment(id, values, () => {
-            // Closes the new comment UI when the comment has been saved
-            this.props.hideComment();
+        // this.props.editComment(id, values, () => {
+        //     // Closes the new comment UI when the comment has been saved
+        //     this.props.hideEditComment();
+        //
+        // });
 
-        });
+        this.props.hideEditComment()
 
 
     };
@@ -70,27 +73,24 @@ class NewComment extends Component
         return (
             <div className="block">
                 <div className="box">
-                    <h1 className="title">New Comment</h1>
+                    <h1 className="title">Editing Comment {this.props.title} </h1>
                     <form onSubmit={handleSubmit(this.submit.bind(this))}>
-                        <Field
-                            label="Title"
-                            name="title"
-                            component={this.renderTextField}
-                        />
                         <Field
                             label="Author"
                             name="author"
+                            currentValue={this.props.author}
                             component={this.renderTextField}
                         />
 
 
                         <Field
                             name="body"
+                            currentValue={this.props.body}
                             component={this.renderBodyField}
                         />
 
                         <button type="submit" className="button is-success">Save Comment</button>
-                        <button onClick={this.props.hideComment} className="button is-danger smallSpaceLeft">Cancel</button>
+                        <button onClick={() => {this.props.hideEditComment()}} className="button is-danger smallSpaceLeft">Cancel</button>
                     </form>
                 </div>
             </div>
@@ -100,27 +100,27 @@ class NewComment extends Component
 
 function validate(values)
 {
-    const errors = {};
-    if (!values.title)
-    {
-        errors.title = "Please enter a title for your post!"
-    }
-    if (!values.author)
-    {
-        errors.author = "Please enter the author of this post!"
-    }
-    if (!values.body)
-    {
-        errors.body = "Please enter some content for your post!"
-    }
-
-
-    return errors;
+    // const errors = {};
+    // if (!values.title)
+    // {
+    //     errors.title = "Please enter a title for your post!"
+    // }
+    // if (!values.author)
+    // {
+    //     errors.author = "Please enter the author of this post!"
+    // }
+    // if (!values.body)
+    // {
+    //     errors.body = "Please enter some content for your post!"
+    // }
+    //
+    //
+    // return errors;
 }
 
 export default reduxForm({
     validate,
-    form: 'NewComment'
+    form: 'EditComment'
 })(
-    connect(null, { createComment })(NewComment)
+    connect(null, { editComment })(EditComment)
 )
