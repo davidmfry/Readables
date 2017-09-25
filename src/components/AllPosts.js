@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchPosts, fetchCategories, fetchPostsInCategory } from "../actions/actions_index";
+import { fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote } from "../actions/actions_index";
 
 //Components
 import Post from './Post'
@@ -39,6 +39,16 @@ class AllPosts extends Component
         this.props.fetchPostsInCategory(categoryName);
     }
 
+    handleOnClickSortByTimestamp()
+    {
+        this.props.fetchPostsByTimeStamp();
+    }
+
+    handleOnClickSortByVote()
+    {
+        this.props.fetchPostsByVote();
+    }
+
     renderCategories()
     {
         return this.props.categories.map( (category) => {
@@ -71,6 +81,10 @@ class AllPosts extends Component
                             Add a Post
                         </Link>
                     </div>
+                    <div className="column">
+                        <button className="button is-outlined" onClick={this.handleOnClickSortByTimestamp.bind(this)}>Sort By Time</button>
+                        <button className="button is-outlined smallSpaceLeft" onClick={this.handleOnClickSortByVote.bind(this)}>Sort By Vote</button>
+                    </div>
 
                 </div>
 
@@ -93,4 +107,4 @@ function mapStateToProps(state)
 }
 
 
-export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory})(AllPosts)
+export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote})(AllPosts)

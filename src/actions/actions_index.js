@@ -3,6 +3,8 @@ import * as utils from '../utilis'
 
 export const FETCH_POSTS = 'fetch_posts';
 export const FETCH_POST = 'fetch_post';
+export const FETCH_POSTS_BY_TIMESTAMP = 'fetch_posts_by_timestamp';
+export const FETCH_POSTS_BY_VOTE = 'fetch_posts_by_vote';
 export const FETCH_POSTS_IN_CATEGORY = 'fetch_posts_in_category';
 export const FETCH_CATEGORIES = 'fetch_categories';
 export const FETCH_COMMENTS = 'fetch_comments';
@@ -37,6 +39,24 @@ export function fetchPost(id)
         type: FETCH_POST,
         payload: request
 
+    }
+}
+
+export function fetchPostsByTimeStamp()
+{
+    const request = axios.get(`${BASE_URL}/posts`, header);
+    return {
+        type: FETCH_POSTS_BY_TIMESTAMP,
+        payload: request
+    }
+}
+
+export function fetchPostsByVote()
+{
+    const request = axios.get(`${BASE_URL}/posts`, header);
+    return {
+        type: FETCH_POSTS_BY_VOTE,
+        payload: request
     }
 }
 

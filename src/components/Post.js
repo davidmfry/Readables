@@ -8,6 +8,10 @@ import moment from 'moment';
 
 class Post extends Component
 {
+    componentDidMount()
+    {
+
+    }
     onClickHandlerUpVote()
     {
         this.props.upVote(this.props.id, this.props.voteScore, "upVote", "post");
