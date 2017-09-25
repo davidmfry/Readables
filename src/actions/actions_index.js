@@ -98,12 +98,13 @@ export function editPost(values, id , callback)
 
 export function editComment(values, id, callback)
 {
+
     values.timestamp = Date.now();
     const request = axios.put(`${BASE_URL}/comments/${id}`, values, header).then( () => callback());
 
     return {
         type: EDIT_COMMENT,
-        payload: request
+        payload: id
     }
 }
 

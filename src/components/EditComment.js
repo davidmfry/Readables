@@ -56,13 +56,12 @@ class EditComment extends Component
     submit = (values) => {
         const { id } = this.props;
         // values is all the data from the form
-        // this.props.editComment(id, values, () => {
-        //     // Closes the new comment UI when the comment has been saved
-        //     this.props.hideEditComment();
-        //
-        // });
+        this.props.editComment(values, id, () => {
+            // Closes the edit comment UI when the comment has been saved
+            this.props.hideEditComment();
+        });
 
-        this.props.hideEditComment()
+
 
 
     };

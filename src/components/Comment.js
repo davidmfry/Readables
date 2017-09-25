@@ -48,12 +48,13 @@ class Comment extends Component
     hideEditComment()
     {
         this.setState({showEditComment: false})
+        this.props.fetchComments(this.props.postId);
+        this.props.fetchPost(this.props.postId);
     }
 
     render()
     {
         let time = moment(this.props.time);
-        console.log( "In comments: " + this.state)
         return (
 
             <div className="box">
