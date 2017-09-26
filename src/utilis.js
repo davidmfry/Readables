@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {BASE_URL, header} from "./appVaribles";
 
 export function createRandomId(numbOfDigits)
 {
@@ -20,8 +21,7 @@ export function createRandomId(numbOfDigits)
 
 export function getCommentCount(id,callback)
 {
-    const BASE_URL = 'http://192.168.1.9:5001';
-    const header = { headers: {'Authorization': 'anything'} };
+
     const request = axios.get(`${BASE_URL}/posts/${id}/comments`, header).then( (data) => callback(data.data));
     return request
 

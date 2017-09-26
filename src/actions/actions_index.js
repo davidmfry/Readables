@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as utils from '../utilis'
 
+import {BASE_URL, header} from '../appVaribles'
+
 export const FETCH_POSTS = 'fetch_posts';
 export const FETCH_POST = 'fetch_post';
 export const FETCH_POSTS_BY_TIMESTAMP = 'fetch_posts_by_timestamp';
@@ -19,8 +21,8 @@ export const COMMENT_VOTE = "down_vote";
 
 
 // Might need to changes this to localhost:#PORT
-const BASE_URL = 'http://192.168.1.9:5001';
-const header = { headers: {'Authorization': 'anything'} };
+// const BASE_URL = 'http://192.168.1.9:5001';
+// const header = { headers: {'Authorization': 'anything'} };
 
 export function fetchPosts()
 {
@@ -174,6 +176,8 @@ export function postVote(id, currentVoteScore, voteCondition)
         case "downVote":
             value = {voteScore: currentVoteScore - 1};
             break;
+        default:
+            break;
     }
 
     const request = axios.put(`${BASE_URL}/posts/${id}`,value, header);
@@ -195,6 +199,9 @@ export function commentVote(id, currentVoteScore, voteCondition)
         case "downVote":
             value = {voteScore: currentVoteScore - 1};
             break;
+        default:
+            break;
+
     }
 
     const request = axios.put(`${BASE_URL}/comments/${id}`,value, header);
