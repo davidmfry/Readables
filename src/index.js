@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import {BrowserRouter, Route, Switch } from 'react-router-dom';
+
 //Middleware
-import logger from "redux-logger";
 import thunk from 'redux-thunk';
 import promise from 'redux-promise';
 
@@ -16,12 +16,11 @@ import NewPost from './components/NewPost'
 import PostDetails from './components/PostDetails'
 import AllPosts from "./components/AllPosts";
 import EditPost from './components/EditPost';
+import CategoryPost from './components/CategoryPosts';
 
 import 'bulma/css/bulma.css'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-
-
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -36,6 +35,7 @@ ReactDOM.render(
         <BrowserRouter>
             <div className="container">
                 <Switch>
+                    <Route path="/posts/category/:category" component={CategoryPost}/>
                     <Route path="/posts/new" component={NewPost}/>
                     <Route path="/posts/edit/:id" component={EditPost}/>
                     <Route path="/posts/:id" component={PostDetails}/>

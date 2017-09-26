@@ -52,7 +52,7 @@ class AllPosts extends Component
     renderCategories()
     {
         return this.props.categories.map( (category) => {
-            return <button  key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</button>
+            return <Link to={`/posts/category/${category.path}`} key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</Link>
         })
     }
 
@@ -74,7 +74,7 @@ class AllPosts extends Component
                 <h1 className="title">Post Index</h1>
                 <div className="columns">
                     <div className="column">
-                        <button onClick={ () => {this.props.fetchPosts()}} className="button is-primary">All Posts</button>
+                        <Link to="/" className="button is-primary">All Posts</Link>
                         {this.renderCategories()}
                         <Link className="button is-info smallSpaceLeft" to="/posts/new" onClick={() => { console.log("clicked" +
                             " the link")}}>

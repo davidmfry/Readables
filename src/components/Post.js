@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postVote, fetchPosts, fetchComments } from "../actions/actions_index";
+import { postVote, fetchPosts, fetchComments, fetchPostsInCategory } from "../actions/actions_index";
 
 import moment from 'moment';
 
@@ -13,6 +13,7 @@ class Post extends Component
     constructor(props)
     {
         super(props);
+        // Used to store the comment count for the post
         this.state = {
             commentCount: 0
         }
@@ -25,14 +26,35 @@ class Post extends Component
     }
     onClickHandlerUpVote()
     {
-        this.props.upVote(this.props.id, this.props.voteScore, "upVote", "post");
-        this.props.fetchPosts();
+        // Checks if the user has navigated to the category view and then re-renders the view with the same category
+        // posts
+        if(this.props.categoryView)
+        {
+            this.props.upVote(this.props.id, this.props.voteScore, "upVote", "post");
+            this.props.fetchPostsInCategory(this.props.categoryView)
+        }
+        else
+        {
+            this.props.upVote(this.props.id, this.props.voteScore, "upVote", "post");
+            this.props.fetchPosts();
+        }
+
     }
 
     onClickHandlerDownVote()
     {
-        this.props.upVote(this.props.id, this.props.voteScore, "downVote", "post");
-        this.props.fetchPosts();
+        // Checks if the user has navigated to the category view and then re-renders the view with the same category
+        // posts
+        if(this.props.categoryView)
+        {
+            this.props.upVote(this.props.id, this.props.voteScore, "downVote", "post");
+            this.props.fetchPostsInCategory(this.props.categoryView)
+        }
+        else
+        {
+            this.props.upVote(this.props.id, this.props.voteScore, "downVote", "post");
+            this.props.fetchPosts();
+        }
     }
 
     render() {
@@ -81,40 +103,11 @@ class Post extends Component
                         </div>
                     </div>
                 </div>
-
-
-
-                {/*<div className="box">*/}
-                {/*<h1 className="title"><Link to={id}>{props.title}</Link></h1>*/}
-                {/*<p>{props.body}</p>*/}
-                {/*<nav className="level">*/}
-                {/*<div className="level-left">*/}
-                {/*<p className="level-item"><strong>Votes: </strong> {props.voteScore} </p>*/}
-                {/*</div>*/}
-                {/*<div className="level-right">*/}
-                {/*<p className="level-item"><strong>Author: </strong>  {props.author}</p>*/}
-                {/*<p className="level-item"><strong>Category: </strong>  {props.category}</p>*/}
-                {/*</div>*/}
-                {/*</nav>*/}
-                {/*</div>*/}
-
-                {/*<div className="message">*/}
-                {/*<div className="message-header">*/}
-                {/*{props.title}*/}
-                {/*</div>*/}
-                {/*<div className="message-body">*/}
-                {/*{props.body}*/}
-                {/**/}
-                {/*</div>*/}
-                {/*</div>*/}
-
             </div>
-
-
         );
     }
 }
 
-export default connect(null, {upVote: postVote, fetchPosts, fetchComments})(Post);
+export default connect(null, {upVote: postVote, fetchPosts, fetchComments, fetchPostsInCategory})(Post);
 
 

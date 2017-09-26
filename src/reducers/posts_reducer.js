@@ -27,7 +27,7 @@ export default function(state = {}, action)
                 .sort( (element1, element2) => element2.voteScore - element1.voteScore);
             return {...state, posts: votePostsData};
         case FETCH_COMMENTS:
-            const commentData = action.payload.data.filter( (comment) => comment.deleted == false)
+            const commentData = action.payload.data.filter( (comment) => comment.deleted === false)
                 .sort( (element1, element2) => element2.voteScore - element1.voteScore);
             return {...state, comments: commentData};
         case FETCH_POSTS_IN_CATEGORY:
@@ -43,9 +43,4 @@ export default function(state = {}, action)
     }
 }
 
-function sortHighToLow(element1, element2)
-{
-    return element2 - element1;
-}
 
-// {...state, [action.payload.data.id]: action.payload.data };

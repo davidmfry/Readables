@@ -63,7 +63,6 @@ export function fetchPostsByVote()
 export function fetchPostsInCategory(category)
 {
     const request = axios.get(`${BASE_URL}/${category}/posts`, header);
-    console.log("in fetchPostsInCategory");
     return {
         type: FETCH_POSTS_IN_CATEGORY,
         payload: request,
@@ -162,16 +161,7 @@ export function deleteComment(id, callback)
     }
 }
 
-function newVoteScore(currentVoteScore, voteCondition)
-{
-    switch (voteCondition)
-    {
-        case "upVote":
-            return {voteScore: currentVoteScore + 1};
-        case "downVote":
-            return {voteScore: currentVoteScore - 1};
-    }
-}
+
 
 export function postVote(id, currentVoteScore, voteCondition)
 {

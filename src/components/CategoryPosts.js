@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchPosts, fetchCategories, fetchPostsInCategory } from "../actions/actions_index";
+import { fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote } from "../actions/actions_index";
 
 //Components
 import Post from './Post'
 
 
-class CategoryPost extends Component
+class CategoryPosts extends Component
 {
     componentDidMount()
     {
-        this.props.fetchPosts();
+        this.props.fetchPostsInCategory(this.props.match.params.category);
         this.props.fetchCategories();
 
     }
@@ -20,6 +20,7 @@ class CategoryPost extends Component
     renderPosts()
     {
         const { posts } = this.props.posts;
+        const { category } = this.props.match.params;
         return posts.map(
             (post) => <Post key={post.id}
                             id={post.id}
@@ -27,6 +28,7 @@ class CategoryPost extends Component
                             body={post.body}
                             author={post.author}
                             category={post.category}
+                            categoryView={category}
                             voteScore={post.voteScore}
                             time={post.timestamp}
             />)
@@ -39,15 +41,20 @@ class CategoryPost extends Component
         this.props.fetchPostsInCategory(categoryName);
     }
 
+    handleOnClickSortByTimestamp()
+    {
+        this.props.fetchPostsByTimeStamp();
+    }
+
+    handleOnClickSortByVote()
+    {
+        this.props.fetchPostsByVote();
+    }
+
     renderCategories()
     {
-        // return this.props.categories.map(
-        //     (category) => <li key={category.path}>{category.name}</li>)
-
-        //console.log(this.props.categories[0])
         return this.props.categories.map( (category) => {
-            return <button  key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</button>
-            // return <li key={category.name}>{category.name}</li>
+            return <Link to={`/posts/category/${category.path}`} key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</Link>
         })
     }
 
@@ -69,12 +76,16 @@ class CategoryPost extends Component
                 <h1 className="title">Post Index</h1>
                 <div className="columns">
                     <div className="column">
-                        <Link to='/' className="button is-primary">All Posts</Link>
+                        <Link to="/" className="button is-primary">All Posts</Link>
                         {this.renderCategories()}
                         <Link className="button is-info smallSpaceLeft" to="/posts/new" onClick={() => { console.log("clicked" +
                             " the link")}}>
                             Add a Post
                         </Link>
+                    </div>
+                    <div className="column">
+                        {/*<button className="button is-outlined" onClick={this.handleOnClickSortByTimestamp.bind(this)}>Sort By Time</button>*/}
+                        {/*<button className="button is-outlined smallSpaceLeft" onClick={this.handleOnClickSortByVote.bind(this)}>Sort By Vote</button>*/}
                     </div>
 
                 </div>
@@ -98,4 +109,4 @@ function mapStateToProps(state)
 }
 
 
-export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory})(CategoryPost)
+export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote})(CategoryPosts)
