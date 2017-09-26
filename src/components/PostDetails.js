@@ -7,6 +7,8 @@ import {fetchPost, deletePost, fetchComments} from "../actions/actions_index";
 import Comment from './Comment';
 import NewComment from './NewComment'
 
+import moment from 'moment';
+
 class PostDetails extends Component
 {
     constructor(props)
@@ -69,7 +71,7 @@ class PostDetails extends Component
     render() {
         const { post } = this.props;
         const { id } = this.props.match.params;
-
+        const time = moment(this.props.timestamp);
 
         // Checks if post is undefined.  If it is undefined then the app will crash.
         // This is also a check to make sure the data has come from the api before reading the actual component
@@ -109,7 +111,8 @@ class PostDetails extends Component
 
                     <div>
                         <h1 className="title">{post.title}</h1>
-                        <h3 className="title">{post.author}</h3>
+                        <h3 className="is-size-3">{post.author}</h3>
+                        <h6 className="is-size-6">{time.format('llll')}</h6>
                         <p>{post.body}</p>
 
                     </div>
