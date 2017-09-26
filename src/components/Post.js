@@ -1,16 +1,27 @@
 import React, {Component} from 'react';
+
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postVote, fetchPosts } from "../actions/actions_index";
+import { postVote, fetchPosts, fetchComments } from "../actions/actions_index";
 
 import moment from 'moment';
 
+import * as utils from '../utilis';
 
 class Post extends Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            commentCount: 0
+        }
+    }
     componentDidMount()
     {
-
+        utils.getCommentCount(this.props.id, (response) => {
+            this.setState({commentCount:response.length})
+        })
     }
     onClickHandlerUpVote()
     {
@@ -41,11 +52,30 @@ class Post extends Component
                             <div className="content ">
 
                                 <h1 className="title"><Link to={id}>{this.props.title}</Link></h1>
-                                <p>
-                                    <strong>{this.props.author}</strong> <small>{time.format('llll')}</small> Category: {this.props.category}
-                                    <br/>
-                                    {this.props.body}
+                                <div className="level">
+                                    <div className="level-left">
+                                        <div className="level-item">
+                                            <strong>{this.props.author}</strong>
+                                        </div>
+                                        <div className="level-item">
+                                            <small>{time.format('llll')}</small>
+                                        </div>
+                                        <div className="level-item">
 
+                                        </div>
+                                    </div>
+
+                                    <div className="level-right">
+                                        <div className="level-item">
+                                            <span>Category: {this.props.category}</span>
+                                        </div>
+                                        <div className="level-item">
+                                            <span> Comments: {this.state.commentCount}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    {this.props.body}
                                 </p>
                             </div>
                         </div>
@@ -85,6 +115,6 @@ class Post extends Component
     }
 }
 
-export default connect(null, {upVote: postVote, fetchPosts})(Post);
+export default connect(null, {upVote: postVote, fetchPosts, fetchComments})(Post);
 
 
