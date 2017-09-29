@@ -58,7 +58,7 @@ class Post extends Component
     }
 
     render() {
-        const id = `/posts/${this.props.id}`;
+        const id = `/posts/${this.props.category}/${this.props.id}`;
         let time = moment(this.props.time);
 
         return (

@@ -34,17 +34,25 @@ class NewPost extends Component
 
     renderCategoryField(field)
     {
+        const { meta: { touched, error } } = field;
+        const inputError = `input ${touched && error ? 'is-danger' : ''}`;
+        const showErrorText = `${touched && error ? 'tag is-danger' : ''}`;
+
         return (
             <div className="field">
                 <label className="label">Category</label>
                 <p className="control">
                     <span className="select">
                         <select {...field.input}>
-                            <option>React</option>
-                            <option>Redux</option>
-                            <option>Udacity</option>
+                            <option>none</option>
+                            <option>react</option>
+                            <option>redux</option>
+                            <option>udacity</option>
                         </select>
                     </span>
+                    <div className={showErrorText}>
+                        {touched ? error : ' '}
+                    </div>
                 </p>
             </div>
         )
@@ -127,6 +135,10 @@ function validate(values)
     if (!values.author)
     {
         errors.author = "Please enter the author of this post!"
+    }
+    if(values.category === 'none')
+    {
+        errors.category = "Please select a category"
     }
     if (!values.body)
     {

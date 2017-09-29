@@ -7,9 +7,13 @@ The backend API was provided by Udacity.  I was responsible for the font end cod
 
 ## How to install
 The master branch Has the most recent build. Run npm install first, then install dependencies.
-You will also need to install the server from Udacity. You will need to change the BASE_URL value in appVariables.js to your local ip address. These variables are how the app makes calles to the server API.
+You will also need to install the server from Udacity.
 
 [Udacity Readables Server](https://github.com/udacity/reactnd-project-readable-starter)
+
+You will need to run npm install on the udaticy readables server.
+
+To start the server run node ./server in the project directory
 
 ## App dependencies
 axios

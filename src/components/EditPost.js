@@ -12,20 +12,49 @@ class EditPost extends Component
     constructor(props)
     {
         super(props);
-        this.state = {selectValue: ''};
+        this.state = {
+            selectValue: '',
+            titleValue: '',
+            authorValue: '',
+            bodyValue: ''
+        };
 
         this.handleOptionChange = this.handleOptionChange.bind(this);
-
+        this.handleOnChangeTitle = this.handleOnChangeTitle.bind(this);
+        this.handleOnChangeAuthor = this.handleOnChangeAuthor.bind(this);
+        this.handleOnChangeBody = this.handleOnChangeBody.bind(this);
+        this.renderTitleField = this.renderTitleField.bind(this);
+        this.renderBodyField = this.renderBodyField.bind(this);
+        this.renderAuthorField = this.renderAuthorField.bind(this);
     }
 
     componentWillMount()
     {
         const {id} = this.props.match.params;
-        this.props.fetchPost(id).then( ({payload}) => {this.setState({selectValue: payload.data.category})});
+        this.props.fetchPost(id).then(
+            ({payload}) => {
+                this.setState(
+                    {selectValue: payload.data.category,
+                     titleValue: payload.data.title,
+                     authorValue: payload.data.author,
+                     bodyValue: payload.data.body
+                    }
+                )});
         this.props.fetchCategories();
+
     }
 
-    renderTextField(field)
+    handleOnChangeTitle(event)
+    {
+        this.setState({titleValue:event.target.value})
+    }
+
+    handleOnChangeAuthor(event)
+    {
+        this.setState({authorValue: event.target.value})
+    }
+
+    renderTitleField(field)
     {
         const { meta: { touched, error } } = field;
         const inputError = `input ${touched && error ? 'is-danger' : ''}`;
@@ -35,13 +64,26 @@ class EditPost extends Component
         return (
             <div className="field">
                 <label className="label">{field.label}</label>
-                <input
-                    className={inputError}
-                    type="text"
-                    {...field.input}
-                    placeholder={field.currentValue}
+                <input className={inputError} type="text" {...field.input} value={this.state.titleValue} onChange={this.handleOnChangeTitle}/>
+                <div className={showErrorText}>
+                    {touched ? error : ' '}
+                </div>
 
-                />
+            </div>
+        )
+    }
+
+    renderAuthorField(field)
+    {
+        const { meta: { touched, error } } = field;
+        const inputError = `input ${touched && error ? 'is-danger' : ''}`;
+        const showErrorText = `${touched && error ? 'tag is-danger' : ''}`;
+
+
+        return (
+            <div className="field">
+                <label className="label">{field.label}</label>
+                <input className={inputError} type="text" {...field.input} value={this.state.authorValue} onChange={this.handleOnChangeAuthor}/>
                 <div className={showErrorText}>
                     {touched ? error : ' '}
                 </div>
@@ -54,6 +96,8 @@ class EditPost extends Component
     {
         this.setState({selectValue: event.target.value})
     }
+
+
 
     renderCategoryField(field)
     {
@@ -73,6 +117,12 @@ class EditPost extends Component
         )
     }
 
+    handleOnChangeBody(event)
+    {
+        this.setState({bodyValue: event.target.value})
+        //console.log(event.target.value);
+    }
+
     renderBodyField(field)
     {
         const { meta: { touched, error } } = field;
@@ -85,7 +135,9 @@ class EditPost extends Component
                 <p className="control">
                     <textarea {...field.input}
                               className={inputError}
-                              placeholder={field.currentValue}>
+                              value={this.state.bodyValue}
+                              onChange={this.handleOnChangeBody}>
+
 
                     </textarea>
                 </p>
@@ -123,14 +175,14 @@ class EditPost extends Component
                         <Field
                             label="Title"
                             name="title"
-                            currentValue={this.props.post.title}
-                            component={this.renderTextField}
+                            currentValue={this.state.titleValue}
+                            component={this.renderTitleField}
                         />
                         <Field
                             label="Author"
                             name="author"
-                            currentValue={this.props.post.author}
-                            component={this.renderTextField}
+                            currentValue={this.state.authorValue}
+                            component={this.renderAuthorField}
                         />
 
                         <Field
@@ -144,7 +196,7 @@ class EditPost extends Component
 
                         <Field
                             name="body"
-                            currentValue={this.props.post.body}
+                            currentValue={this.state.bodyValue}
                             component={this.renderBodyField}
                         />
 

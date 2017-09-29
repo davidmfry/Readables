@@ -17,6 +17,7 @@ import PostDetails from './components/PostDetails'
 import AllPosts from "./components/AllPosts";
 import EditPost from './components/EditPost';
 import CategoryPost from './components/CategoryPosts';
+import NoMatch from './components/NoMatch';
 
 import 'bulma/css/bulma.css'
 import './index.css';
@@ -38,8 +39,9 @@ ReactDOM.render(
                     <Route path="/posts/category/:category" component={CategoryPost}/>
                     <Route path="/posts/new" component={NewPost}/>
                     <Route path="/posts/edit/:id" component={EditPost}/>
-                    <Route path="/posts/:id" component={PostDetails}/>
+                    <Route path="/posts/:category/:id" component={PostDetails}/>
                     <Route path="/" component={AllPosts}/>
+                    <Route component={NoMatch}/>
                 </Switch>
             </div>
         </BrowserRouter>
