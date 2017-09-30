@@ -17,7 +17,7 @@ class PostDetails extends Component
         this.state = {
             showNewComment: false,
             showEditComment: false,
-            parentId: this.props.match.params
+            parentId: this.props.match.params,
         };
         // makes sure this stays in context of PostDetails when hideComment is called from another component
         this.hideComment = this.hideComment.bind(this);
@@ -28,6 +28,7 @@ class PostDetails extends Component
         const { id } = this.props.match.params;
         this.props.fetchPost(id);
         this.props.fetchComments(id);
+
     }
 
     onDeleteHandler()
@@ -72,7 +73,6 @@ class PostDetails extends Component
         const { post } = this.props;
         const { id } = this.props.match.params;
         const time = moment(this.props.timestamp);
-
         // Checks if post is undefined.  If it is undefined then the app will crash.
         // This is also a check to make sure the data has come from the api before reading the actual component
         if (!this.props.post)
@@ -113,6 +113,7 @@ class PostDetails extends Component
                         <h1 className="title">{post.title}</h1>
                         <h3 className="is-size-3">{post.author}</h3>
                         <h6 className="is-size-6">{time.format('llll')}</h6>
+                        <h6 className="is-size-6">Comments: {this.props.comments.length}</h6>
                         <p>{post.body}</p>
 
                     </div>

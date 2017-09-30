@@ -58,7 +58,6 @@ class Post extends Component
     }
 
     render() {
-        const id = `/posts/${this.props.category}/${this.props.id}`;
         let time = moment(this.props.time);
 
         return (
@@ -73,7 +72,7 @@ class Post extends Component
                         <div className="media-content">
                             <div className="content ">
 
-                                <h1 className="title"><Link to={id}>{this.props.title}</Link></h1>
+                                <h1 className="title"><Link to={`/posts/${this.props.category}/${this.props.id}`}>{this.props.title}</Link></h1>
                                 <div className="level">
                                     <div className="level-left">
                                         <div className="level-item">

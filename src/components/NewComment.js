@@ -72,11 +72,7 @@ class NewComment extends Component
                 <div className="box">
                     <h1 className="title">New Comment</h1>
                     <form onSubmit={handleSubmit(this.submit.bind(this))}>
-                        <Field
-                            label="Title"
-                            name="title"
-                            component={this.renderTextField}
-                        />
+
                         <Field
                             label="Author"
                             name="author"

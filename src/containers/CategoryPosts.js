@@ -54,7 +54,7 @@ class CategoryPosts extends Component
     renderCategories()
     {
         return this.props.categories.map( (category) => {
-            return <Link to={`/posts/category/${category.path}`} key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</Link>
+            return <Link to={`/posts/${category.path}`} key={category.name} onClick={ () => { this.handleOnClickCategoryButton(category.name)}} className="button is-primary smallSpaceLeft">{category.name}</Link>
         })
     }
 
@@ -78,8 +78,7 @@ class CategoryPosts extends Component
                     <div className="column">
                         <Link to="/" className="button is-primary">All Posts</Link>
                         {this.renderCategories()}
-                        <Link className="button is-info smallSpaceLeft" to="/posts/new" onClick={() => { console.log("clicked" +
-                            " the link")}}>
+                        <Link className="button is-info smallSpaceLeft" to="/posts/new">
                             Add a Post
                         </Link>
                     </div>

@@ -36,11 +36,12 @@ ReactDOM.render(
         <BrowserRouter>
             <div className="container">
                 <Switch>
-                    <Route path="/posts/category/:category" component={CategoryPost}/>
+
                     <Route path="/posts/new" component={NewPost}/>
                     <Route path="/posts/edit/:id" component={EditPost}/>
                     <Route path="/posts/:category/:id" component={PostDetails}/>
-                    <Route path="/" component={AllPosts}/>
+                    <Route path="/posts/:category" component={CategoryPost}/>
+                    <Route path="/"  component={AllPosts}/>
                     <Route component={NoMatch}/>
                 </Switch>
             </div>

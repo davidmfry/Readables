@@ -136,8 +136,6 @@ export function createComment(id, values, callback)
     values.timestamp = Date.now();
 
     const request = axios.post(`${BASE_URL}/comments`, values, header).then( () => callback());
-    console.log(request.data);
-
     return {
         type: CREATE_NEW_COMMENT,
         payload: request
