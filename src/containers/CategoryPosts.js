@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import { fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote } from "../actions/actions_index";
 
 //Components
-import Post from './Post'
+import Post from '../components/Post'
 
 
-class AllPosts extends Component
+class CategoryPosts extends Component
 {
     componentDidMount()
     {
-        this.props.fetchPosts();
+        this.props.fetchPostsInCategory(this.props.match.params.category);
         this.props.fetchCategories();
 
     }
@@ -20,16 +20,18 @@ class AllPosts extends Component
     renderPosts()
     {
         const { posts } = this.props.posts;
+        const { category } = this.props.match.params;
         return posts.map(
-                (post) => <Post key={post.id}
-                                id={post.id}
-                                title={post.title}
-                                body={post.body}
-                                author={post.author}
-                                category={post.category}
-                                voteScore={post.voteScore}
-                                time={post.timestamp}
-                />)
+            (post) => <Post key={post.id}
+                            id={post.id}
+                            title={post.title}
+                            body={post.body}
+                            author={post.author}
+                            category={post.category}
+                            categoryView={category}
+                            voteScore={post.voteScore}
+                            time={post.timestamp}
+            />)
 
 
     }
@@ -82,8 +84,8 @@ class AllPosts extends Component
                         </Link>
                     </div>
                     <div className="column">
-                        <button className="button is-outlined" onClick={this.handleOnClickSortByTimestamp.bind(this)}>Sort By Time</button>
-                        <button className="button is-outlined smallSpaceLeft" onClick={this.handleOnClickSortByVote.bind(this)}>Sort By Vote</button>
+                        {/*<button className="button is-outlined" onClick={this.handleOnClickSortByTimestamp.bind(this)}>Sort By Time</button>*/}
+                        {/*<button className="button is-outlined smallSpaceLeft" onClick={this.handleOnClickSortByVote.bind(this)}>Sort By Vote</button>*/}
                     </div>
 
                 </div>
@@ -107,4 +109,4 @@ function mapStateToProps(state)
 }
 
 
-export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote})(AllPosts)
+export default connect(mapStateToProps, {fetchPosts, fetchCategories, fetchPostsInCategory, fetchPostsByTimeStamp, fetchPostsByVote})(CategoryPosts)

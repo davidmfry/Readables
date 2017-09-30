@@ -9,6 +9,19 @@ import { createNewPost} from "../actions/actions_index";
 
 class NewPost extends Component
 {
+
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            categoryValue: "none"
+        };
+
+        this.handleCategoryChange = this.handleCategoryChange.bind(this);
+
+    }
+
+
     renderTextField(field)
     {
         const { meta: { touched, error } } = field;
@@ -31,6 +44,10 @@ class NewPost extends Component
         )
     }
 
+    handleCategoryChange(event)
+    {
+        this.setState({categoryValue: event.target.value})
+    }
 
     renderCategoryField(field)
     {
@@ -43,7 +60,7 @@ class NewPost extends Component
                 <label className="label">Category</label>
                 <p className="control">
                     <span className="select">
-                        <select {...field.input}>
+                        <select {...field.input} className={inputError} value={field.newValue} onChange={field.handleChange}  >
                             <option>none</option>
                             <option>react</option>
                             <option>redux</option>
@@ -67,9 +84,9 @@ class NewPost extends Component
         return (
             <div className="field">
                 <label className="label">Body</label>
-                <p className="control">
+                <div className="control">
                     <textarea {...field.input} className={inputError} placeholder="Type your post in here..."></textarea>
-                </p>
+                </div>
                 <div className={showErrorText}>
                     {touched ? error : ' '}
                 </div>
@@ -80,7 +97,6 @@ class NewPost extends Component
 
     submit = (values) => {
         // values is all the data from the form
-
         this.props.createNewPost(values, () => {
             // Sends the user back to the home page after the new post has been add to the DB
             this.props.history.push('/');
@@ -108,6 +124,8 @@ class NewPost extends Component
 
                         <Field
                             name="category"
+                            newValue = {this.state.categoryValue}
+                            handleChange = {this.handleCategoryChange}
                             component={this.renderCategoryField}
                         />
 
@@ -128,23 +146,22 @@ class NewPost extends Component
 function validate(values)
 {
     const errors = {};
-    if (!values.title)
+    if (!values.title || values.title.trim().length === 0)
     {
         errors.title = "Please enter a title for your post!"
     }
-    if (!values.author)
+    if (!values.author || values.author.trim().length === 0)
     {
         errors.author = "Please enter the author of this post!"
     }
-    if(values.category === 'none')
+    if(!values.category || values.category === 'none')
     {
         errors.category = "Please select a category"
     }
-    if (!values.body)
+    if (!values.body || values.body.trim().length === 0)
     {
         errors.body = "Please enter some content for your post!"
     }
-
 
     return errors;
 }

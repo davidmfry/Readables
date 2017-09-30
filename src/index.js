@@ -13,10 +13,10 @@ import { reducers } from "./reducers/reducers_index";
 
 //Component
 import NewPost from './components/NewPost'
-import PostDetails from './components/PostDetails'
-import AllPosts from "./components/AllPosts";
-import EditPost from './components/EditPost';
-import CategoryPost from './components/CategoryPosts';
+import PostDetails from './containers/PostDetails'
+import AllPosts from "./containers/AllPosts";
+import EditPost from './containers/EditPost';
+import CategoryPost from './containers/CategoryPosts';
 import NoMatch from './components/NoMatch';
 
 import 'bulma/css/bulma.css'

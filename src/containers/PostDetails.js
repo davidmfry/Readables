@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import {fetchPost, deletePost, fetchComments} from "../actions/actions_index";
 
 import Comment from './Comment';
-import NewComment from './NewComment'
+import NewComment from '../components/NewComment'
 
 import moment from 'moment';
 
